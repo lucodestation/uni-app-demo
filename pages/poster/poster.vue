@@ -54,19 +54,28 @@
           </view>
         </view>
         <view class="save-button">
-          <text @click="handleButton">保存海报</text>
+          <text @click="handleButton">生成海报</text>
         </view>
       </view>
     </uni-popup>
 
-    <canvas
+    <view class="canvas-wrap">
+      <canvas
+        :style="{
+          width: canvas.width,
+          height: canvas.height,
+        }"
+        canvas-id="myCanvas"
+      />
+    </view>
+    <!-- <canvas
       class="hide"
       :style="{
         width: canvas.width,
         height: canvas.height,
       }"
       canvas-id="myCanvas"
-    />
+    /> -->
   </view>
 </template>
 
@@ -236,23 +245,23 @@ export default {
       setTimeout(() => {
         ctx.draw()
 
-        // 保存图片
-        setTimeout(() => {
-          uni.canvasToTempFilePath({
-            canvasId: 'myCanvas',
-            success: res => {
-              console.log(res)
-              this.base64 = res.tempFilePath
+        // // 保存图片
+        // setTimeout(() => {
+        //   uni.canvasToTempFilePath({
+        //     canvasId: 'myCanvas',
+        //     success: res => {
+        //       console.log(res)
+        //       this.base64 = res.tempFilePath
 
-              uni.saveImageToPhotosAlbum({
-                filePath: this.base64,
-                success(res) {
-                  console.log('success')
-                },
-              })
-            },
-          })
-        }, 200)
+        //       uni.saveImageToPhotosAlbum({
+        //         filePath: this.base64,
+        //         success(res) {
+        //           console.log('success')
+        //         },
+        //       })
+        //     },
+        //   })
+        // }, 200)
       }, 200)
     },
     //圆角矩形
@@ -385,6 +394,10 @@ export default {
       border-radius: 40rpx;
     }
   }
+}
+.canvas-wrap {
+  background-color: #ddd;
+  padding: 30rpx;
 }
 canvas.hide {
   position: absolute;
