@@ -1,10 +1,13 @@
 <template>
   <view>
-    <rich-text :nodes="title"></rich-text>
-
-    <navigator url="/pages/poster/poster">
-      <button>海报</button>
-    </navigator>
+    <view>我的</view>
+    <view>我的</view>
+    <view>我的</view>
+    <view>我的</view>
+    <view>我的</view>
+    <view>我的</view>
+    <navigator url="/pages/mine/about/about">关于我们</navigator>
+    <navigator url="/pages/mine/more/more">更多</navigator>
 
     <!-- <view class="full-screen" id="fullScreen" @click="handleFullScreen"></view> -->
   </view>
@@ -13,19 +16,13 @@
 <script>
 export default {
   data() {
-    return {
-      title: `<h1 style="text-align: center; color: #2c3e50;">首页</h1>`,
-    }
+    return {}
   },
-  async onLoad() {
-    console.log('首页 onLoad')
-    const result = await uni.request({
-      url: 'https://api.github.com/',
-    })
-    console.log(result)
+  onLoad() {
+    console.log('个人中心 onLoad')
   },
   onShow() {
-    console.log('首页 onShow')
+    console.log('个人中心 onShow')
   },
   methods: {
     handleFullScreen() {
