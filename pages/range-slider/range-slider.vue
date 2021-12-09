@@ -61,6 +61,6 @@ export default {
 <style lang="scss" scoped>
 .range-slider-wrapper {
   padding: 30rpx;
-  background-color: #080;
+  // background-color: #080;
 }
 </style>
