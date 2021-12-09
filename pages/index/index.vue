@@ -5,6 +5,24 @@
     <navigator url="/pages/poster/poster">
       <button>海报</button>
     </navigator>
+    <navigator url="/pages/range-slider/range-slider">
+      <button>滑块</button>
+    </navigator>
+
+    <!-- <view>
+      <view>这是一<text>句</text>话</view>
+      <chunLei-popups
+        v-model="value"
+        :popData="data"
+        @tapPopup="tapPopup"
+        :x="100"
+        :y="20"
+        placement="top-end"
+        value
+        theme="dark"
+      >
+      </chunLei-popups>
+    </view> -->
 
     <!-- <view class="full-screen" id="fullScreen" @click="handleFullScreen"></view> -->
   </view>
@@ -15,6 +33,8 @@ export default {
   data() {
     return {
       title: `<h1 style="text-align: center; color: #2c3e50;">首页</h1>`,
+      value: '提示信息',
+      data: '123',
     }
   },
   async onLoad() {

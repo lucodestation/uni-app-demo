@@ -80,6 +80,15 @@
 </template>
 
 <script>
+/* 
+可能会遇到的一些问题
+components 中无法绘图，可能是 createCanvasContext 没有加第二个参数 this
+图片圆角（特别是正圆）显示异常，可能是 border-radius 使用了百分比值导致的
+文字不显示，可能是没有设置 line-height 值
+文字显示位置不正确，需要把要显示的文字用 text 包裹
+无法绘制网络图片，需要用 getImageInfo 获取图片信息（页面中只要图片显示出来了，图片就被保存到本地了，使用 getImageInfo 珂获取保存到本地的临时路径），然后获取 getImageInfo 的返回值中的 path ，绘制图片时图片路径使用 path
+*/
+
 export default {
   data() {
     return {
@@ -399,8 +408,8 @@ export default {
   background-color: #ddd;
   padding: 30rpx;
 }
-canvas.hide {
-  position: absolute;
-  left: -999px;
-}
+// canvas.hide {
+//   position: absolute;
+//   left: -999px;
+// }
 </style>

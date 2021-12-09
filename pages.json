@@ -62,7 +62,16 @@
         "navigationStyle": "custom"
       }
     }
-  ],
+      ,{
+            "path" : "pages/range-slider/range-slider",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
   "globalStyle": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "uni-app",
