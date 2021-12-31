@@ -5,6 +5,9 @@
     <navigator url="/pages/poster/poster">
       <button>海报</button>
     </navigator>
+    <navigator url="/pages/poster2/poster2">
+      <button>海报2</button>
+    </navigator>
     <navigator url="/pages/range-slider/range-slider">
       <button>滑块</button>
     </navigator>

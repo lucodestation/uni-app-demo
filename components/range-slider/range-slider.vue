@@ -68,6 +68,7 @@
       :style="{
         top: -42 - blockSize / 2 + 'rpx',
         left: maxBlockLeft - 60 + blockSize / 2 + 'rpx',
+        color: bubbleTextColor,
       }"
     >
       <text>{{ bubbleText }}</text>
@@ -170,6 +171,10 @@ export default {
     bubbleText: {
       type: String,
       default: '0-100',
+    },
+    bubbleTextColor: {
+      type: String,
+      default: '#FFFFFF',
     },
     bubbleShow: {
       type: Boolean,
@@ -469,7 +474,6 @@ export default {
   justify-content: center;
   align-items: center;
   background-color: #2a2a2a;
-  color: #fff;
 }
 /* 
 高 6rpx
