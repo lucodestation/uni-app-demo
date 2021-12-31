@@ -49,6 +49,10 @@
 <script>
 import fly from '@/request/fly.js'
 
+/*
+  
+*/
+
 export default {
   data() {
     return {
@@ -149,6 +153,8 @@ export default {
       })
     },
     async handleDrawPoster() {
+      console.log('this.$refs.rCanvas', this.$refs.rCanvas)
+      console.log('this.$refs.rCanvas.init', this.$refs.rCanvas.init)
       const drawStart = async () => {
         setTimeout(async () => {
           const canvas = this.$refs.rCanvas
@@ -301,7 +307,7 @@ export default {
           dataset: true,
           rect: true,
           size: true,
-          computedStyle: ['color', 'font-size', 'line-height', 'font-weight'],
+          computedStyle: ['color', 'font-size', 'line-height', 'font-weight', 'font-family'],
         },
         data => {
           // console.log('canvas-text', data)
@@ -317,6 +323,7 @@ export default {
               line_height: parseFloat(item['line-height']),
               line_clamp: item.dataset.maxLine ? item.dataset.maxLine : 1,
               font_weight,
+              font_family: item['font-family'],
             }
             textArr.push(obj)
           })

@@ -2,6 +2,9 @@
   <view>
     <rich-text :nodes="title"></rich-text>
 
+    <view>
+      <button @click="handleTest">test</button>
+    </view>
     <navigator url="/pages/poster/poster">
       <button>海报</button>
     </navigator>

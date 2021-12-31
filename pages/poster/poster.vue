@@ -4,53 +4,25 @@
 
     <uni-popup ref="popup">
       <view class="popup-content">
-        <image
-          class="close"
-          @click="handleClose"
-          src="/static/icons/close.png"
-        />
+        <image class="close" @click="handleClose" src="/static/icons/close.png" />
         <view class="container" id="container">
           <view class="cover-wrap">
-            <image
-              class="cover canvas-image"
-              :data-image="poster.cover"
-              :src="poster.cover"
-            />
+            <image class="cover canvas-image" :data-image="poster.cover" :src="poster.cover" />
           </view>
-          <view class="goods-name canvas-text" :data-text="poster.goodsName">{{
-            poster.goodsName
-          }}</view>
+          <view class="goods-name canvas-text" :data-text="poster.goodsName">{{ poster.goodsName }}</view>
           <view class="price-wrap">
             <text class="rmb canvas-text" data-text="￥">￥</text>
-            <text class="price canvas-text" :data-text="poster.price">{{
-              poster.price
-            }}</text>
+            <text class="price canvas-text" :data-text="poster.price">{{ poster.price }}</text>
           </view>
           <view class="info">
             <view class="left">
-              <image
-                class="avatar canvas-image"
-                :data-image="poster.avatar"
-                :src="poster.avatar"
-              />
+              <image class="avatar canvas-image" :data-image="poster.avatar" :src="poster.avatar" />
               <view class="text-wrap">
-                <text
-                  class="username canvas-text"
-                  :data-text="poster.username"
-                  >{{ poster.username }}</text
-                >
-                <text
-                  class="plain-text canvas-text"
-                  :data-text="poster.plainText1"
-                  >{{ poster.plainText1 }}</text
-                >
+                <text class="username canvas-text" :data-text="poster.username">{{ poster.username }}</text>
+                <text class="plain-text canvas-text" :data-text="poster.plainText1">{{ poster.plainText1 }}</text>
               </view>
             </view>
-            <image
-              class="qrcode canvas-image"
-              :data-image="poster.qrcode"
-              :src="poster.qrcode"
-            />
+            <image class="qrcode canvas-image" :data-image="poster.qrcode" :src="poster.qrcode" />
           </view>
         </view>
         <view class="save-button">
@@ -96,8 +68,7 @@ export default {
         cover: '/static/poster/cover.png',
         avatar: '/static/poster/avatar.png',
         qrcode: '/static/poster/qrcode.png',
-        goodsName:
-          '华晨宝马 X1 2021款 改款 sDrive20Li 尊享型 华晨宝马 X1 2021款 改款 sDrive20Li 尊享型',
+        goodsName: '华晨宝马 X1 2021款 改款 sDrive20Li 尊享型 华晨宝马 X1 2021款 改款 sDrive20Li 尊享型',
         price: '298800.00',
         username: '欧阳海鸥',
         plainText1: '邀请体验小程序',
@@ -146,15 +117,7 @@ export default {
           left = data.left
 
           // drawRoundRect(ctx, x, y, width, height, radius, color)
-          this.drawRoundRect(
-            ctx,
-            0,
-            0,
-            data.width,
-            data.height,
-            parseInt(data['border-radius']) * 2,
-            data['background-color']
-          )
+          this.drawRoundRect(ctx, 0, 0, data.width, data.height, parseInt(data['border-radius']) * 2, data['background-color'])
         }
       )
 
@@ -173,15 +136,7 @@ export default {
 
           // drawRoundImg(ctx, img, x, y, width, height, radius)
           data.map(item => {
-            this.drawRoundImg(
-              ctx,
-              item.dataset.image,
-              item.left - left,
-              item.top - top,
-              item.width,
-              item.height,
-              parseInt(item['border-radius'])
-            )
+            this.drawRoundImg(ctx, item.dataset.image, item.left - left, item.top - top, item.width, item.height, parseInt(item['border-radius']))
           })
         }
       )
@@ -192,14 +147,7 @@ export default {
           rect: true,
           size: true,
           dataset: true,
-          computedStyle: [
-            'color',
-            'font-family',
-            'font-weight',
-            'font-size',
-            'line-height',
-            'font',
-          ],
+          computedStyle: ['color', 'font-family', 'font-weight', 'font-size', 'line-height', 'font'],
         },
         data => {
           console.log('text', data)
@@ -221,30 +169,14 @@ export default {
               currentText += letter
               currentWidth = ctx.measureText(currentText).width
               if (currentWidth > item.width) {
-                ctx.fillText(
-                  currentText,
-                  item.left - left,
-                  item.top -
-                    top +
-                    parseInt(item['line-height']) -
-                    5 +
-                    currentLineHeight
-                )
+                ctx.fillText(currentText, item.left - left, item.top - top + parseInt(item['line-height']) - 5 + currentLineHeight)
                 currentText = ''
                 currentLineHeight += parseInt(item['line-height'])
               }
             }
 
             if (currentText) {
-              ctx.fillText(
-                currentText,
-                item.left - left,
-                item.top -
-                  top +
-                  parseInt(item['line-height']) -
-                  5 +
-                  currentLineHeight
-              )
+              ctx.fillText(currentText, item.left - left, item.top - top + parseInt(item['line-height']) - 5 + currentLineHeight)
             }
           })
         }
@@ -281,18 +213,8 @@ export default {
       ctx.setStrokeStyle(color)
       ctx.setLineJoin('round') //交点设置成圆角
       ctx.setLineWidth(radius)
-      ctx.strokeRect(
-        x + radius / 2,
-        y + radius / 2,
-        width - radius,
-        height - radius
-      )
-      ctx.fillRect(
-        x + radius,
-        y + radius,
-        width - radius * 2,
-        height - radius * 2
-      )
+      ctx.strokeRect(x + radius / 2, y + radius / 2, width - radius, height - radius)
+      ctx.fillRect(x + radius, y + radius, width - radius * 2, height - radius * 2)
       ctx.stroke()
       ctx.closePath()
     },
@@ -303,13 +225,7 @@ export default {
       // 左上角
       ctx.arc(x + radius, y + radius, radius, Math.PI, Math.PI * 1.5)
       // 右上角
-      ctx.arc(
-        x + width - radius,
-        y + radius,
-        radius,
-        Math.PI * 1.5,
-        Math.PI * 2
-      )
+      ctx.arc(x + width - radius, y + radius, radius, Math.PI * 1.5, Math.PI * 2)
       // 右下角
       ctx.arc(x + width - radius, y + height - radius, radius, 0, Math.PI * 0.5)
       // 左下角
