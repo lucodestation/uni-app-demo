@@ -226,8 +226,12 @@ export default {
 
       query.exec()
 
-      setTimeout(() => {
-        canvas.draw()
+      setTimeout(async () => {
+        await canvas.draw()
+
+        await canvas.save(() => {
+          console.log('保存成功')
+        })
       }, 500)
     },
   },

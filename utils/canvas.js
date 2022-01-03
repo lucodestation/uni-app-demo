@@ -10,6 +10,7 @@
  */
 
 const canvas = {}
+let id = ''
 
 let ctx = null
 
@@ -19,6 +20,7 @@ let ctx = null
  */
 canvas.init = (id, _this) => {
   ctx = uni.createCanvasContext(id, _this)
+  id = id
   return ctx
 }
 
@@ -249,7 +251,29 @@ canvas.drawText = async option => {
 }
 
 canvas.draw = () => {
-  ctx.draw()
+  return new Promise((resolve, reject) => ctx.draw(false, resolve))
+}
+
+canvas.save = callback => {
+  return new Promise((resolve, reject) => {
+    uni.canvasToTempFilePath(
+      {
+        canvasId: 'myCanvas',
+        success: res => {
+          uni.saveImageToPhotosAlbum({
+            filePath: res.tempFilePath,
+            success: result => {
+              if (callback) {
+                resolve()
+                callback()
+              }
+            },
+          })
+        },
+      },
+      this
+    )
+  })
 }
 
 export default canvas
