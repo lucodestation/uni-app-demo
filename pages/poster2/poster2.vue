@@ -22,7 +22,6 @@
             <view class="prompt-text canvas-text" data-text="邀请体验小程序">邀请体验小程序</view>
           </view>
           <view class="qrcode-wrap">
-            <image class="bg canvas-local-image" data-image="/static/images/share-round-empty2.png" src="/static/images/share-round-empty2.png" mode="" />
             <image class="qrcode canvas-image" :data-image="posterData.qrcode" :src="posterData.qrcode" mode="" />
           </view>
         </view>
@@ -56,7 +55,7 @@ console.log(canvas)
   init 初始化 canvas
   drawImage 绘制图片
   drawText 绘制文字
-  drawRect 绘制矩形
+  drawFillRect 绘制矩形
 */
 
 export default {
@@ -84,7 +83,7 @@ export default {
   async onLoad() {},
   methods: {
     async handleDrawPoster() {
-      canvas.init('myCanvas', this)
+      const ctx = canvas.init('myCanvas', this)
 
       let canvasTop = 0
       let canvasLeft = 0
@@ -106,7 +105,7 @@ export default {
 
           // console.log('canvas', canvas)
 
-          await canvas.drawRect({
+          await canvas.drawFillRect({
             x: 0,
             y: 0,
             width: data.width,
@@ -129,33 +128,13 @@ export default {
           console.log(data)
           data.map(async item => {
             console.log(item)
-            await canvas.drawRect({
+            await canvas.drawFillRect({
               x: item.left - canvasLeft,
               y: item.top - canvasTop,
               width: item.width,
               height: item.height,
               backgroundColor: item['background-color'],
             })
-          })
-        }
-      )
-
-      query.select('#container .canvas-local-image').fields(
-        {
-          id: true,
-          dataset: true,
-          rect: true, // left right top bottom
-          size: true, // width height
-          computedStyle: ['border-radius'],
-        },
-        async data => {
-          await canvas.drawImage({
-            image: data.dataset.image,
-            x: data.left - canvasLeft,
-            y: data.top - canvasTop,
-            width: data.width,
-            height: data.height,
-            borderRadius: data['border-radius'],
           })
         }
       )
@@ -216,11 +195,40 @@ export default {
         }
       )
 
+      // 绘制阴影
+      query.select('#container .qrcode-wrap').fields(
+        {
+          id: true,
+          dataset: true,
+          rect: true, // left right top bottom
+          size: true, // width height
+          computedStyle: ['background-color', 'border-radius'],
+        },
+        async data => {
+          ctx.save() // 保存当前的绘图上下文
+          ctx.beginPath() // 开始创建一个路径，需要调用fill或者stroke才会使用路径进行填充或描边
+
+          // 设置阴影样式
+          // offsetX Number 阴影相对于形状在水平方向的偏移
+          // offsetY Number 阴影相对于形状在竖直方向的偏移
+          // blur Number 0~100 阴影的模糊级别，数值越大越模糊
+          // color Color 阴影的颜色
+          // ctx.setShadow(0, 0, 15, 'rgba(102, 102, 102)')
+          ctx.setShadow(0, 0, 7, 'rgba(102, 102, 102, 0.1)')
+
+          ctx.arc(data.left - canvasLeft + data.width / 2, data.top - canvasTop + data.height / 2, data.width / 2, 0, 2 * Math.PI)
+
+          ctx.setFillStyle(data['background-color']) // 设置边框颜色
+          ctx.fill() // 画出当前路径的边框。默认颜色色为黑色
+          ctx.closePath() // 关闭一个路径
+        }
+      )
+
       query.exec()
 
       setTimeout(() => {
         canvas.draw()
-      }, 300)
+      }, 500)
     },
   },
 }
@@ -338,10 +346,14 @@ image {
   position: relative;
   width: 120rpx;
   height: 120rpx;
-  /* background-color: red; */
+  background-color: #fff;
+  box-shadow: 0px 0px 7px 0px rgba(102, 102, 102, 0.1);
+  /* box-shadow: 0px 0px 7px 0px rgba(102, 102, 102); */
   display: flex;
   justify-content: center;
   align-items: center;
+  /* outline: 2rpx solid red; */
+  border-radius: 60rpx;
 }
 .qrcode-wrap image {
   position: absolute;
@@ -353,6 +365,7 @@ image {
 .qrcode-wrap .qrcode {
   width: 68rpx;
   height: 68rpx;
+  /* outline: 2rpx solid red; */
 }
 
 .button-wrap {

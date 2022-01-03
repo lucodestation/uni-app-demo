@@ -76,6 +76,15 @@ canvas.drawFillRect = option => {
     // 左竖线
     ctx.lineTo(x, y + borderRadius)
 
+    // 设置阴影样式
+    // offsetX Number 阴影相对于形状在水平方向的偏移
+    // offsetY Number 阴影相对于形状在竖直方向的偏移
+    // blur Number 0~100 阴影的模糊级别，数值越大越模糊
+    // color Color 阴影的颜色
+    if (!option.setShadow) {
+      ctx.setShadow(0, 0, 0, '#fff')
+    }
+
     ctx.setFillStyle(backgroundColor) // 设置填充色
     ctx.fill() // 对当前路径中的内容进行填充。默认的填充色为黑色
 
@@ -143,6 +152,10 @@ canvas.drawImage = option => {
      * @param {Number} dHeight 在目标画布上绘制图像的高度，允许对绘制的图像进行缩放
      */
     ctx.drawImage(image, x, y, width, height)
+
+    if (!option.setShadow) {
+      ctx.setShadow(0, 0, 0, '#fff')
+    }
 
     ctx.restore() // 恢复之前保存的绘图上下文
 
@@ -213,6 +226,10 @@ canvas.drawText = async option => {
 
       if (currentText) {
         ctx.fillText(currentText, x, y + currentLineHeight)
+      }
+
+      if (!option.setShadow) {
+        ctx.setShadow(0, 0, 0, '#fff')
       }
     }
 
