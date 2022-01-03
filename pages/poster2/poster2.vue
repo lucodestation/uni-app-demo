@@ -13,7 +13,7 @@
           <text class="price canvas-text" :data-text="posterData.goodsinfo.price">{{ posterData.goodsinfo.price }}</text>
         </view>
 
-        <view class="hr2 canvas-rect"></view>
+        <!-- <view class="hr2 canvas-rect"></view> -->
 
         <view class="userinfo-wrap">
           <view class="avatar-wrap"><image class="canvas-image" :data-image="posterData.userinfo.avatar" :src="posterData.userinfo.avatar" mode="" /></view>
@@ -116,28 +116,28 @@ export default {
         }
       )
 
-      query.selectAll('#container .canvas-rect').fields(
-        {
-          id: true,
-          dataset: true,
-          rect: true, // left right top bottom
-          size: true, // width height
-          computedStyle: ['background-color'],
-        },
-        async data => {
-          console.log(data)
-          data.map(async item => {
-            console.log(item)
-            await canvas.drawFillRect({
-              x: item.left - canvasLeft,
-              y: item.top - canvasTop,
-              width: item.width,
-              height: item.height,
-              backgroundColor: item['background-color'],
-            })
-          })
-        }
-      )
+      // query.selectAll('#container .canvas-rect').fields(
+      //   {
+      //     id: true,
+      //     dataset: true,
+      //     rect: true, // left right top bottom
+      //     size: true, // width height
+      //     computedStyle: ['background-color'],
+      //   },
+      //   async data => {
+      //     // console.log(data)
+      //     data.map(async item => {
+      //       // console.log(item)
+      //       await canvas.drawFillRect({
+      //         x: item.left - canvasLeft,
+      //         y: item.top - canvasTop,
+      //         width: item.width,
+      //         height: item.height,
+      //         backgroundColor: item['background-color'],
+      //       })
+      //     })
+      //   }
+      // )
 
       query.selectAll('#container .canvas-image').fields(
         {
