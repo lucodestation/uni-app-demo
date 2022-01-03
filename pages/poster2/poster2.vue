@@ -316,9 +316,6 @@ image {
   align-items: center;
   /* background-color: pink; */
 }
-.avatar-wrap {
-  /* background-color: red; */
-}
 .avatar-wrap image {
   width: 88rpx;
   height: 88rpx;
@@ -346,6 +343,7 @@ image {
   position: relative;
   width: 120rpx;
   height: 120rpx;
+  border-radius: 60rpx;
   background-color: #fff;
   box-shadow: 0px 0px 7px 0px rgba(102, 102, 102, 0.1);
   /* box-shadow: 0px 0px 7px 0px rgba(102, 102, 102); */
@@ -353,14 +351,6 @@ image {
   justify-content: center;
   align-items: center;
   /* outline: 2rpx solid red; */
-  border-radius: 60rpx;
-}
-.qrcode-wrap image {
-  position: absolute;
-}
-.qrcode-wrap .bg {
-  width: 120rpx;
-  height: 120rpx;
 }
 .qrcode-wrap .qrcode {
   width: 68rpx;
@@ -392,8 +382,5 @@ image {
 .canvas-wrap {
   background-color: pink;
   padding: 30rpx;
-}
-.my-canvas {
-  /* outline: 1px solid red; */
 }
 </style>
