@@ -1,339 +1,226 @@
 <template>
   <view>
-    <view>
-      <button @click="handleOpenPopup">显示海报</button>
-      <button @click="handleTest">test</button>
-    </view>
+    <view class="wrap">
+      <view class="container" id="container">
+        <view class="goods-image-wrap"><image class="canvas-image" :data-image="posterData.goodsinfo.image" :src="posterData.goodsinfo.image" /></view>
 
-    <uni-popup ref="popup">
-      <view class="wrap">
-        <view class="container" id="container">
-          <image class="close-icon" src="/static/icons/close.png" mode="" @click="handleClosePopup" />
-
-          <view class="goods-image-wrap"><image class="canvas-image" :data-image="posterData.goodsinfo.image" :src="posterData.goodsinfo.image" /></view>
-
-          <view class="title-wrap ell2">
-            <text class="canvas-text" :data-text="posterData.goodsinfo.name" data-max-line="2">{{ posterData.goodsinfo.name }}</text>
-          </view>
-
-          <view class="price-wrap">
-            <text class="rmb canvas-text" data-text="￥">￥</text>
-            <text class="price canvas-text" :data-text="posterData.goodsinfo.price">{{ posterData.goodsinfo.price }}</text>
-          </view>
-
-          <view class="hr2 canvas-rect"></view>
-
-          <view class="userinfo-wrap">
-            <view class="avatar-wrap"><image class="canvas-image" :data-image="posterData.userinfo.avatar" :src="posterData.userinfo.avatar" mode="" /></view>
-            <view class="nickname-wrap">
-              <view class="nickname canvas-text" :data-text="posterData.userinfo.nickname">{{ posterData.userinfo.nickname }}</view>
-              <view class="prompt-text canvas-text" data-text="邀请体验小程序">邀请体验小程序</view>
-            </view>
-            <view class="qrcode-wrap">
-              <image class="bg canvas-image" data-image="/static/images/share-round-empty.png" src="/static/images/share-round.png" mode="" />
-              <image class="qrcode canvas-image" :data-image="posterData.qrcode" :src="posterData.qrcode" mode="" />
-            </view>
-          </view>
+        <view class="title-wrap">
+          <view class="canvas-text ell2" :data-text="posterData.goodsinfo.name" data-max-line="2">{{ posterData.goodsinfo.name }}</view>
         </view>
 
-        <view class="button-wrap">
-          <view class="button" @click="handleDrawPoster">保存海报</view>
+        <view class="price-wrap">
+          <text class="rmb canvas-text" data-text="￥">￥</text>
+          <text class="price canvas-text" :data-text="posterData.goodsinfo.price">{{ posterData.goodsinfo.price }}</text>
+        </view>
+
+        <view class="hr2 canvas-rect"></view>
+
+        <view class="userinfo-wrap">
+          <view class="avatar-wrap"><image class="canvas-image" :data-image="posterData.userinfo.avatar" :src="posterData.userinfo.avatar" mode="" /></view>
+          <view class="nickname-wrap">
+            <view class="nickname canvas-text" :data-text="posterData.userinfo.nickname">{{ posterData.userinfo.nickname }}</view>
+            <view class="prompt-text canvas-text" data-text="邀请体验小程序">邀请体验小程序</view>
+          </view>
+          <view class="qrcode-wrap">
+            <image class="bg canvas-local-image" data-image="/static/images/share-round-empty2.png" src="/static/images/share-round-empty2.png" mode="" />
+            <image class="qrcode canvas-image" :data-image="posterData.qrcode" :src="posterData.qrcode" mode="" />
+          </view>
         </view>
       </view>
-    </uni-popup>
+    </view>
 
-    <r-canvas ref="rCanvas"></r-canvas>
+    <view>
+      <button @click="handleDrawPoster">button1</button>
+    </view>
+
+    <view class="canvas-wrap">
+      <canvas
+        class="my-canvas"
+        id="myCanvas"
+        canvas-id="myCanvas"
+        :style="{
+          width: myCanvasWidth + 'px',
+          height: myCanvasHeight + 'px',
+        }"
+      ></canvas>
+    </view>
   </view>
 </template>
 
 <script>
 import fly from '@/request/fly.js'
+import canvas from '@/utils/canvas.js'
+console.log(canvas)
 
 /*
-  
+  init 初始化 canvas
+  drawImage 绘制图片
+  drawText 绘制文字
+  drawRect 绘制矩形
 */
 
 export default {
   data() {
     return {
-      posterData: {},
+      posterData: {
+        goodsinfo: {
+          image: 'http://4s.duowencaiwu.com/uploads/20211229/2e5d7899d065551f989feeae2d36c7e0.jpg',
+          name: '适用于通用汽车雨刮雨刷器喷水管玻璃水连接管橡胶软管三通直通y型t接头 黑色橡胶管2米配接头各2个',
+          partsgoods_id: 13,
+          price: '0.01',
+        },
+        qrcode: 'https://res.wx.qq.com/wxdoc/dist/assets/img/demo.ef5c5bef.jpg',
+        userinfo: {
+          avatar: 'http://4s.duowencaiwu.com/uploads/20211214/5796f9c97e25bcfd6bee9e58dec3d581.png',
+          nickname: '卢先生',
+        },
+      },
       tempFilePath: '',
+      myCanvasWidth: 0,
+      myCanvasHeight: 0,
+      text: 'this is a test this is a test this is a test this is a test this is a test this is a test this is a test ',
     }
   },
+  async onLoad() {},
   methods: {
-    async handleOpenPopup() {
-      const result = await fly.get('http://localhost:3000/api/demo/foo/poster2')
-      // console.log('result', result)
-      this.posterData = result.data
-      this.$refs.popup.open()
-    },
-    handleClosePopup() {
-      this.$refs.popup.close()
-    },
-    async handleTest() {
-      const width = 375 - 30
-      const height = 750
-
-      const canvas = this.$refs.rCanvas
-      // 初始化canvas
-      await canvas.init({
-        canvas_id: 'abc', // 唯一 id
-        canvas_width: width, // 画布宽度
-        canvas_height: height, // 画布高度
-        background_color: 'transparent', // 画布颜色
-        // hidden: true, // 是否隐藏画布不呈现在页面上
-      })
-
-      // 画圆角矩形
-      await canvas.fillRoundRect({
-        x: 0,
-        y: 0,
-        w: width,
-        h: height,
-        radius: 5, // 矩形圆角弧度
-        fill_color: '#ffffff',
-      })
-
-      // 画文字
-      await canvas.drawText({
-        text: '精选好物精选好物精选好物精选好物精选好物精选好物精选好物精选好物精选好物精选好物精选好物精选好物',
-        x: 0,
-        y: 30,
-        font_color: 'pink',
-        font_size: 26,
-        max_width: width,
-        line_height: 32,
-        line_clamp: 2,
-        font_weight: 'bold',
-      })
-
-      // 画矩形
-      await canvas.drawRect({
-        x: 0,
-        y: 30,
-        w: width,
-        h: 10,
-        color: 'red',
-      })
-
-      // 画图片
-      canvas.drawImage({
-        url: this.posterData.goodsinfo.image,
-        x: 0,
-        y: 50,
-        w: 300,
-        h: 300,
-        border_radius: 300,
-      })
-
-      // // 画文字
-      // await canvas
-      //   .drawText({
-      //     text: '精选好物精选好物精选好物精选好物精选好物精选好物精选好物精选好物精选好物精选好物精选好物精选好物',
-      //     max_width: 0,
-      //     x: 38,
-      //     y: 50,
-      //     font_color: 'rgb(175, 174, 175)',
-      //     font_size: 11,
-      //   })
-      //   .catch(err_msg => {
-      //     uni.showToast({
-      //       title: err_msg,
-      //       icon: 'none',
-      //     })
-      //   })
-
-      // 生成海报
-      await canvas.draw(res => {
-        // console.log(res)
-        this.tempFilePath = res.tempFilePath
-        //res.tempFilePath：生成成功，返回base64图片
-        // 保存图片
-        // canvas.saveImage(res.tempFilePath)
-      })
-    },
     async handleDrawPoster() {
-      console.log('this.$refs.rCanvas', this.$refs.rCanvas)
-      console.log('this.$refs.rCanvas.init', this.$refs.rCanvas.init)
-      const drawStart = async () => {
-        setTimeout(async () => {
-          const canvas = this.$refs.rCanvas
-          // 初始化canvas
-          await canvas.init({
-            canvas_id: 'abc', // 唯一 id
-            canvas_width: roundRectBg.w, // 画布宽度
-            canvas_height: roundRectBg.h, // 画布高度
-            background_color: 'transparent', // 画布颜色
-            // hidden: true, // 是否隐藏画布不呈现在页面上
-          })
+      canvas.init('myCanvas', this)
 
-          // 画圆角矩形
-          await canvas.fillRoundRect(roundRectBg)
-          // 画矩形
-          rectArr.map(async item => await canvas.drawRect(item))
-          // 画图片
-          imageArr.map(async item => await canvas.drawImage(item))
-          // 画文字
-          textArr.map(async item => await canvas.drawText(item))
-          // 生成海报
-          await canvas.draw(res => {
-            // console.log(res)
-            this.tempFilePath = res.tempFilePath
-            //res.tempFilePath：生成成功，返回base64图片
-            // 保存图片
-            // canvas.saveImage(res.tempFilePath)
-          })
-        }, 200)
-      }
-
+      let canvasTop = 0
+      let canvasLeft = 0
       const query = uni.createSelectorQuery().in(this)
-
-      /*
-				boundingClientRect 能获取
-					id
-
-					dataset
-
-					width		单位 px
-					height
-
-					top
-					right
-					bottom
-					left
-
-				fields 能获取
-					id
-
-					dataset
-
-					width
-					height
-
-					top
-					right
-					bottom
-					left
-
-					和其他 CSS 属性
-			*/
-
-      // 圆角矩形背景
-      let roundRectBg = ''
-      const imageArr = []
-      const textArr = []
-      const rectArr = []
-
-      let containerTop = 0
-      let containerLeft = 0
       query.select('#container').fields(
         {
-          // id: true,
+          id: true,
           dataset: true,
           rect: true, // left right top bottom
           size: true, // width height
-          // scrollOffset: true, // scrollHeight scrollLeft scrollTop scrollWidth
           computedStyle: ['background-color', 'border-radius'],
         },
-        data => {
+        async data => {
           // console.log('fields #container', data)
-          containerTop = data.top
-          containerLeft = data.left
-          roundRectBg = {
+          this.myCanvasWidth = data.width
+          this.myCanvasHeight = data.height
+          canvasTop = data.top
+          canvasLeft = data.left
+
+          // console.log('canvas', canvas)
+
+          await canvas.drawRect({
             x: 0,
             y: 0,
-            w: data.width,
-            h: data.height,
-            radius: data['border-radius'], // 矩形圆角弧度
-            fill_color: data['background-color'],
-          }
-          if (roundRectBg && imageArr.length && textArr.length && rectArr.length) {
-            drawStart()
-          }
+            width: data.width,
+            height: data.height,
+            backgroundColor: data['background-color'],
+            borderRadius: data['border-radius'],
+          })
         }
       )
 
       query.selectAll('#container .canvas-rect').fields(
         {
+          id: true,
           dataset: true,
-          rect: true,
-          size: true,
+          rect: true, // left right top bottom
+          size: true, // width height
           computedStyle: ['background-color'],
         },
-        data => {
-          // console.log('canvas-image', data)
-          data.map(item => {
-            rectArr.push({
-              x: item.left - containerLeft,
-              y: item.top - containerTop,
-              w: item.width,
-              h: item.height,
-              color: item['background-color'],
+        async data => {
+          console.log(data)
+          data.map(async item => {
+            console.log(item)
+            await canvas.drawRect({
+              x: item.left - canvasLeft,
+              y: item.top - canvasTop,
+              width: item.width,
+              height: item.height,
+              backgroundColor: item['background-color'],
             })
           })
-          if (roundRectBg && imageArr.length && textArr.length && rectArr.length) {
-            drawStart()
-          }
+        }
+      )
+
+      query.select('#container .canvas-local-image').fields(
+        {
+          id: true,
+          dataset: true,
+          rect: true, // left right top bottom
+          size: true, // width height
+          computedStyle: ['border-radius'],
+        },
+        async data => {
+          await canvas.drawImage({
+            image: data.dataset.image,
+            x: data.left - canvasLeft,
+            y: data.top - canvasTop,
+            width: data.width,
+            height: data.height,
+            borderRadius: data['border-radius'],
+          })
         }
       )
 
       query.selectAll('#container .canvas-image').fields(
         {
+          id: true,
           dataset: true,
-          rect: true,
-          size: true,
+          rect: true, // left right top bottom
+          size: true, // width height
           computedStyle: ['border-radius'],
         },
-        data => {
-          // console.log('canvas-image', data)
-          data.map(item => {
-            imageArr.push({
-              url: item.dataset.image,
-              x: item.left - containerLeft,
-              y: item.top - containerTop,
-              w: item.width,
-              h: item.height,
-              border_radius: item['border-radius'],
+        async data => {
+          data.map(async item => {
+            const [error, imageResult] = await uni.getImageInfo({ src: item.dataset.image })
+            // console.log(imageResult)
+            await canvas.drawImage({
+              image: imageResult.path,
+              x: item.left - canvasLeft,
+              y: item.top - canvasTop,
+              width: item.width,
+              height: item.height,
+              borderRadius: item['border-radius'],
             })
           })
-          if (roundRectBg && imageArr.length && textArr.length && rectArr.length) {
-            drawStart()
-          }
         }
       )
 
       query.selectAll('#container .canvas-text').fields(
         {
+          id: true,
           dataset: true,
-          rect: true,
-          size: true,
-          computedStyle: ['color', 'font-size', 'line-height', 'font-weight', 'font-family'],
+          rect: true, // left right top bottom
+          size: true, // width height
+          computedStyle: ['font-size', 'font-weight', 'font-family', 'color', 'line-height'],
         },
-        data => {
-          // console.log('canvas-text', data)
-          data.map(item => {
-            const font_weight = item['font-weight'] === '700' ? 'bold' : 'normal'
-            const obj = {
+        async data => {
+          data.map(async item => {
+            // console.log(item)
+            const option = {
               text: item.dataset.text,
-              x: item.left - containerLeft,
-              y: item.top - containerTop + parseFloat(item['line-height']) - 5,
-              font_color: item.color,
-              font_size: item['font-size'],
-              max_width: item.width,
-              line_height: parseFloat(item['line-height']),
-              line_clamp: item.dataset.maxLine ? item.dataset.maxLine : 1,
-              font_weight,
-              font_family: item['font-family'],
+              x: item.left - canvasLeft,
+              y: item.top - canvasTop + parseFloat(item['line-height']) - 5,
+              color: item['color'],
+              fontFamily: item['font-family'],
+              fontWeight: item['font-weight'] === '700' ? 'bold' : 'normal',
+              fontSize: item['font-size'],
+              lineHeight: item['line-height'],
             }
-            textArr.push(obj)
+            if (item.dataset.maxLine) {
+              option.maxLine = item.dataset.maxLine
+              console.log(item.width)
+              option.maxWidth = item.width
+            }
+            // console.table(option)
+            await canvas.drawText(option)
           })
-          if (roundRectBg && imageArr.length && textArr.length && rectArr.length) {
-            drawStart()
-          }
         }
       )
 
       query.exec()
+
+      setTimeout(() => {
+        canvas.draw()
+      }, 300)
     },
   },
 }
@@ -352,6 +239,13 @@ export default {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
 }
+.ell3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
 </style>
 
 <style>
@@ -359,8 +253,8 @@ image {
   vertical-align: bottom;
 }
 .wrap {
-  padding: 0 30rpx;
-  /* background-color: #f6f6f6; */
+  padding: 30rpx;
+  background-color: hotpink;
 }
 .container {
   /* background-color: #edf; */
@@ -388,7 +282,7 @@ image {
 .title-wrap {
   padding: 0 30rpx;
   padding-top: 40rpx;
-  font-weight: bold;
+  font-weight: 700;
   font-size: 30rpx;
   color: #333;
   line-height: 46rpx;
@@ -398,7 +292,7 @@ image {
   padding: 30rpx;
   color: #fe3b3b;
   font-size: 24rpx;
-  font-weight: bold;
+  font-weight: 700;
   line-height: 50rpx;
   /* background-color: #fee; */
 }
@@ -480,5 +374,13 @@ image {
 .result-wrap {
   padding: 30rpx;
   background-color: #eee;
+}
+
+.canvas-wrap {
+  background-color: pink;
+  padding: 30rpx;
+}
+.my-canvas {
+  /* outline: 1px solid red; */
 }
 </style>
