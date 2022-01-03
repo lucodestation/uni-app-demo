@@ -8,10 +8,11 @@ let ctx = null
  */
 canvas.init = (id, _this) => {
   ctx = uni.createCanvasContext(id, _this)
+  return ctx
 }
 
 /**
- * 绘制圆角矩形
+ * 绘制填充圆角矩形
  * @param {Object} option
  * @param {Number} option.x 矩形左上角 x 坐标，单位 px
  * @param {Number} option.y 矩形左上角 y 坐标，单位 px
@@ -20,7 +21,7 @@ canvas.init = (id, _this) => {
  * @param {Number} option.borderRadius 圆角大小，单位 px
  * @param {Number} option.backgroundColor 矩形背景色
  */
-canvas.drawRect = option => {
+canvas.drawFillRect = option => {
   return new Promise((resolve, reject) => {
     // console.log('绘制圆角矩形', option)
     const x = parseFloat(option.x)
@@ -129,9 +130,9 @@ canvas.drawImage = option => {
     ctx.setStrokeStyle('rgba(0,0,0,0)')
     ctx.stroke() // 画出当前路径的边框。默认颜色色为黑色
 
-    ctx.clip() // 从原始画布中剪切任意形状和尺寸
+    ctx.clip() // 从原始画布中剪切任意形状和尺寸。一旦剪切了某个区域，则所有之后的绘图都会被限制在被剪切的区域内（不能访问画布上的其他区域）。可以在使用 clip() 方法前通过使用 save() 方法对当前画布区域进行保存，并在以后的任意时间对其进行恢复（通过 restore() 方法）。
 
-    ctx.closePath() // 关闭一个路径。一旦剪切了某个区域，则所有之后的绘图都会被限制在被剪切的区域内（不能访问画布上的其他区域）。可以在使用 clip() 方法前通过使用 save() 方法对当前画布区域进行保存，并在以后的任意时间对其进行恢复（通过 restore() 方法）。
+    ctx.closePath() // 关闭一个路径
 
     // 绘制图像到画布
     /**
