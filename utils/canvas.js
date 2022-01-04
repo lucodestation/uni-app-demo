@@ -13,14 +13,16 @@ const canvas = {}
 
 let ctx = null
 let canvasId = ''
+let _this = undefined
 
 /**
  * 初始化 canvas
  * @param {String} id - <canvas /> 标签上的 canvas-id 或 id
  */
-canvas.init = (id, _this) => {
-  ctx = uni.createCanvasContext(id, _this)
+canvas.init = (id, that) => {
+  ctx = uni.createCanvasContext(id, that)
   canvasId = id
+  _this = that
   return ctx
 }
 
@@ -289,7 +291,7 @@ canvas.draw = callback => {
             reject(err)
           },
         },
-        this
+        _this
       )
     })
   })
@@ -301,7 +303,7 @@ canvas.save = filePath => {
       filePath,
       success: result => {
         console.log('saveImageToPhotosAlbum success', result)
-        resolve()
+        resolve(result)
       },
       fail: error => {
         console.log('saveImageToPhotosAlbum error', error)
