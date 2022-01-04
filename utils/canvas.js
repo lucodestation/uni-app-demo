@@ -12,6 +12,7 @@
 const canvas = {}
 
 let ctx = null
+let canvasId = ''
 
 /**
  * 初始化 canvas
@@ -19,6 +20,7 @@ let ctx = null
  */
 canvas.init = (id, _this) => {
   ctx = uni.createCanvasContext(id, _this)
+  canvasId = id
   return ctx
 }
 
@@ -271,39 +273,41 @@ canvas.drawText = async option => {
 canvas.draw = callback => {
   return new Promise((resolve, reject) => {
     ctx.draw(false, () => {
-      resolve()
-      if (callback) {
-        callback()
-      }
+      uni.canvasToTempFilePath(
+        {
+          canvasId,
+          success: res => {
+            console.log('canvasToTempFilePath success', res)
+            // res.tempFilePath
+            resolve(res.tempFilePath)
+            if (callback) {
+              callback(res.tempFilePath)
+            }
+          },
+          fail: err => {
+            console.log('canvasToTempFilePath error', err)
+            reject(err)
+          },
+        },
+        this
+      )
     })
   })
 }
 
-canvas.save = () => {
+canvas.save = filePath => {
   return new Promise((resolve, reject) => {
-    uni.canvasToTempFilePath(
-      {
-        canvasId: 'myCanvas',
-        success: res => {
-          console.log('canvasToTempFilePath success', res)
-
-          uni.saveImageToPhotosAlbum({
-            filePath: res.tempFilePath,
-            success: result => {
-              console.log('saveImageToPhotosAlbum success', result)
-              resolve()
-            },
-            fail: error => {
-              console.log('saveImageToPhotosAlbum error', error)
-            },
-          })
-        },
-        fail: err => {
-          console.log('canvasToTempFilePath error', err)
-        },
+    uni.saveImageToPhotosAlbum({
+      filePath,
+      success: result => {
+        console.log('saveImageToPhotosAlbum success', result)
+        resolve()
       },
-      this
-    )
+      fail: error => {
+        console.log('saveImageToPhotosAlbum error', error)
+        reject(error)
+      },
+    })
   })
 }
 

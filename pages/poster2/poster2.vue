@@ -83,6 +83,7 @@ export default {
   async onLoad() {},
   methods: {
     async handleDrawPoster() {
+      uni.showLoading({ mask: true })
       const ctx = canvas.init('myCanvas', this)
 
       const query = uni.createSelectorQuery().in(this)
@@ -212,10 +213,25 @@ export default {
         }
 
         console.log('开始绘制')
-        await canvas.draw(async () => {
-          console.log('开始保存')
-          await canvas.save()
-        })
+        await canvas
+          .draw(async filePath => {
+            console.log(filePath)
+            console.log('开始保存')
+            await canvas
+              .save(filePath)
+              .finally(() => {
+                uni.hideLoading()
+              })
+              .then(() => {
+                uni.showToast({
+                  title: '已保存到相册',
+                  icon: 'none',
+                })
+              })
+          })
+          .catch(error => {
+            uni.hideLoading()
+          })
       })
     },
   },
