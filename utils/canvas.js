@@ -126,7 +126,7 @@ canvas.drawFillRect = option => {
  */
 canvas.drawImage = option => {
   // console.log('绘制圆角图片', option)
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     const image = option.image
     const x = parseFloat(option.x)
     const y = parseFloat(option.y)
@@ -174,7 +174,7 @@ canvas.drawImage = option => {
      * @param {Number} dWidth 在目标画布上绘制图像的宽度，允许对绘制的图像进行缩放
      * @param {Number} dHeight 在目标画布上绘制图像的高度，允许对绘制的图像进行缩放
      */
-    ctx.drawImage(image, x, y, width, height)
+    await ctx.drawImage(image, x, y, width, height)
 
     if (setShadow) {
       ctx.setShadow(setShadow)

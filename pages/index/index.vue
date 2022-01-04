@@ -45,10 +45,10 @@ export default {
   },
   async onLoad() {
     console.log('首页 onLoad')
-    const result = await uni.request({
-      url: 'https://api.github.com/',
-    })
-    console.log(result)
+    // const result = await uni.request({
+    //   url: 'https://api.github.com/',
+    // })
+    // console.log(result)
   },
   onShow() {
     console.log('首页 onShow')
