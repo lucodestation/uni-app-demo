@@ -68,17 +68,22 @@
         "navigationBarTitleText": "滑块",
         "enablePullDownRefresh": false
       }
+    },
+    {
+      "path": "pages/poster2/poster2",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/scroll-view/scroll-view",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
     }
-      ,{
-            "path" : "pages/poster2/poster2",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-    ],
+  ],
   "globalStyle": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "uni-app",

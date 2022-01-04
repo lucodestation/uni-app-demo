@@ -49,7 +49,7 @@
 <script>
 import fly from '@/request/fly.js'
 import canvas from '@/utils/canvas.js'
-console.log(canvas)
+// console.log(canvas)
 
 /*
   init 初始化 canvas

@@ -14,6 +14,9 @@
     <navigator url="/pages/range-slider/range-slider">
       <button>滑块</button>
     </navigator>
+    <navigator url="/pages/scroll-view/scroll-view">
+      <button>scroll-view</button>
+    </navigator>
 
     <!-- <view>
       <view>这是一<text>句</text>话</view>
