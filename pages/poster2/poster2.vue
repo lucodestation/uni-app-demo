@@ -83,38 +83,17 @@ export default {
   async onLoad() {},
   methods: {
     async handleDrawPoster() {
+      uni.showLoading({ mask: true })
       const ctx = canvas.init('myCanvas', this)
 
-      let canvasTop = 0
-      let canvasLeft = 0
       const query = uni.createSelectorQuery().in(this)
-      query.select('#container').fields(
-        {
-          id: true,
-          dataset: true,
-          rect: true, // left right top bottom
-          size: true, // width height
-          computedStyle: ['background-color', 'border-radius'],
-        },
-        async data => {
-          // console.log('fields #container', data)
-          this.myCanvasWidth = data.width
-          this.myCanvasHeight = data.height
-          canvasTop = data.top
-          canvasLeft = data.left
-
-          // console.log('canvas', canvas)
-
-          await canvas.drawFillRect({
-            x: 0,
-            y: 0,
-            width: data.width,
-            height: data.height,
-            backgroundColor: data['background-color'],
-            borderRadius: data['border-radius'],
-          })
-        }
-      )
+      query.select('#container').fields({
+        id: true,
+        dataset: true,
+        rect: true, // left right top bottom
+        size: true, // width height
+        computedStyle: ['background-color', 'border-radius'],
+      })
 
       // query.selectAll('#container .canvas-rect').fields(
       //   {
@@ -139,100 +118,121 @@ export default {
       //   }
       // )
 
-      query.selectAll('#container .canvas-image').fields(
-        {
-          id: true,
-          dataset: true,
-          rect: true, // left right top bottom
-          size: true, // width height
-          computedStyle: ['border-radius'],
-        },
-        async data => {
-          data.map(async item => {
-            const [error, imageResult] = await uni.getImageInfo({ src: item.dataset.image })
-            // console.log(imageResult)
-            await canvas.drawImage({
-              image: imageResult.path,
-              x: item.left - canvasLeft,
-              y: item.top - canvasTop,
-              width: item.width,
-              height: item.height,
-              borderRadius: item['border-radius'],
-            })
-          })
-        }
-      )
+      // const imageArr = []
+      query.selectAll('#container .canvas-image').fields({
+        id: true,
+        dataset: true,
+        rect: true, // left right top bottom
+        size: true, // width height
+        computedStyle: ['border-radius'],
+      })
 
-      query.selectAll('#container .canvas-text').fields(
-        {
-          id: true,
-          dataset: true,
-          rect: true, // left right top bottom
-          size: true, // width height
-          computedStyle: ['font-size', 'font-weight', 'font-family', 'color', 'line-height'],
-        },
-        async data => {
-          data.map(async item => {
-            // console.log(item)
-            const option = {
-              text: item.dataset.text,
-              x: item.left - canvasLeft,
-              y: item.top - canvasTop + parseFloat(item['line-height']) - 5,
-              color: item['color'],
-              fontFamily: item['font-family'],
-              fontWeight: item['font-weight'] === '700' ? 'bold' : 'normal',
-              fontSize: item['font-size'],
-              lineHeight: item['line-height'],
-            }
-            if (item.dataset.maxLine) {
-              option.maxLine = item.dataset.maxLine
-              console.log(item.width)
-              option.maxWidth = item.width
-            }
-            // console.table(option)
-            await canvas.drawText(option)
-          })
-        }
-      )
+      query.selectAll('#container .canvas-text').fields({
+        id: true,
+        dataset: true,
+        rect: true, // left right top bottom
+        size: true, // width height
+        computedStyle: ['font-size', 'font-weight', 'font-family', 'color', 'line-height'],
+      })
 
       // 绘制阴影
-      query.select('#container .qrcode-wrap').fields(
-        {
-          id: true,
-          dataset: true,
-          rect: true, // left right top bottom
-          size: true, // width height
-          computedStyle: ['background-color', 'border-radius'],
-        },
-        async data => {
-          ctx.save() // 保存当前的绘图上下文
-          ctx.beginPath() // 开始创建一个路径，需要调用fill或者stroke才会使用路径进行填充或描边
+      query.select('#container .qrcode-wrap').fields({
+        id: true,
+        dataset: true,
+        rect: true, // left right top bottom
+        size: true, // width height
+        computedStyle: ['background-color', 'border-radius'],
+      })
 
-          // 设置阴影样式
-          // offsetX Number 阴影相对于形状在水平方向的偏移
-          // offsetY Number 阴影相对于形状在竖直方向的偏移
-          // blur Number 0~100 阴影的模糊级别，数值越大越模糊
-          // color Color 阴影的颜色
-          // ctx.setShadow(0, 0, 15, 'rgba(102, 102, 102)')
-          ctx.setShadow(0, 0, 7, 'rgba(102, 102, 102, 0.1)')
+      query.exec(async result => {
+        console.log('exec', result)
+        const containerInfo = result[0]
+        this.myCanvasWidth = containerInfo.width
+        this.myCanvasHeight = containerInfo.height
+        const canvasTop = containerInfo.top
+        const canvasLeft = containerInfo.left
 
-          ctx.arc(data.left - canvasLeft + data.width / 2, data.top - canvasTop + data.height / 2, data.width / 2, 0, 2 * Math.PI)
-
-          ctx.setFillStyle(data['background-color']) // 设置边框颜色
-          ctx.fill() // 画出当前路径的边框。默认颜色色为黑色
-          ctx.closePath() // 关闭一个路径
-        }
-      )
-
-      query.exec()
-
-      setTimeout(async () => {
-        await canvas.draw()
-
-        await canvas.save(() => {
-          console.log('保存成功')
+        // 绘制白色背景
+        await canvas.drawFillRect({
+          x: 0,
+          y: 0,
+          width: containerInfo.width,
+          height: containerInfo.height,
+          backgroundColor: containerInfo['background-color'],
+          borderRadius: containerInfo['border-radius'],
         })
-      }, 500)
+
+        // 绘制阴影
+        const shadowInfo = result[3]
+        ctx.save() // 保存当前的绘图上下文
+        ctx.beginPath() // 开始创建一个路径，需要调用fill或者stroke才会使用路径进行填充或描边
+        ctx.setShadow(0, 0, 7, 'rgba(102, 102, 102, 0.05)')
+        ctx.arc(shadowInfo.left - canvasLeft + shadowInfo.width / 2, shadowInfo.top - canvasTop + shadowInfo.height / 2, shadowInfo.width / 2, 0, 2 * Math.PI)
+        ctx.setFillStyle(shadowInfo['background-color']) // 设置边框颜色
+        ctx.fill() // 画出当前路径的边框。默认颜色色为黑色
+        ctx.closePath() // 关闭一个路径
+
+        // 绘制图片
+        const imageArr = result[1]
+        // 使用 forEach 或 map 遍历不能保证会在遍历中绘制完成后才执行后续语句
+        for (const item of imageArr) {
+          const [error, imageResult] = await uni.getImageInfo({ src: item.dataset.image })
+          // console.table(imageResult)
+          // console.log('drawImage before')
+          await canvas.drawImage({
+            image: imageResult.path,
+            x: item.left - canvasLeft,
+            y: item.top - canvasTop,
+            width: item.width,
+            height: item.height,
+            borderRadius: item['border-radius'],
+          })
+          // console.log('drawImage after')
+        }
+
+        // 绘制文字
+        const textArr = result[2]
+        for (const item of textArr) {
+          const option = {
+            text: item.dataset.text,
+            x: item.left - canvasLeft,
+            y: item.top - canvasTop + parseFloat(item['line-height']) - 5,
+            color: item['color'],
+            fontFamily: item['font-family'],
+            fontWeight: item['font-weight'] === '700' ? 'bold' : 'normal',
+            fontSize: item['font-size'],
+            lineHeight: item['line-height'],
+          }
+          if (item.dataset.maxLine) {
+            option.maxLine = item.dataset.maxLine
+            option.maxWidth = item.width
+          }
+          // console.log('drawText before')
+          await canvas.drawText(option)
+          // console.log('drawText after')
+        }
+
+        console.log('开始绘制')
+        await canvas
+          .draw(async filePath => {
+            console.log(filePath)
+            console.log('开始保存')
+            await canvas
+              .save(filePath)
+              .finally(() => {
+                uni.hideLoading()
+              })
+              .then(() => {
+                uni.showToast({
+                  title: '已保存到相册',
+                  icon: 'none',
+                })
+              })
+          })
+          .catch(error => {
+            uni.hideLoading()
+          })
+      })
     },
   },
 }
@@ -349,7 +349,7 @@ image {
   height: 120rpx;
   border-radius: 60rpx;
   background-color: #fff;
-  box-shadow: 0px 0px 7px 0px rgba(102, 102, 102, 0.1);
+  box-shadow: 0px 0px 7px 0px rgba(102, 102, 102, 0.05);
   /* box-shadow: 0px 0px 7px 0px rgba(102, 102, 102); */
   display: flex;
   justify-content: center;

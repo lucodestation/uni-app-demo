@@ -13,14 +13,17 @@ const canvas = {}
 let id = ''
 
 let ctx = null
+let canvasId = ''
+let _this = undefined
 
 /**
  * 初始化 canvas
  * @param {String} id - <canvas /> 标签上的 canvas-id 或 id
  */
-canvas.init = (id, _this) => {
-  ctx = uni.createCanvasContext(id, _this)
-  id = id
+canvas.init = (id, that) => {
+  ctx = uni.createCanvasContext(id, that)
+  canvasId = id
+  _this = that
   return ctx
 }
 
@@ -43,6 +46,11 @@ canvas.drawFillRect = option => {
     const height = parseFloat(option.height)
     const borderRadius = parseFloat(option.borderRadius) || 0
     const backgroundColor = option.backgroundColor || '#000'
+
+    let setShadow = undefined
+    if (option.setShadow) {
+      setShadow = option.setShadow
+    }
 
     // 将 borderRadius 设置为短边的一半
     if (width < borderRadius * 2 || height < borderRadius * 2) {
@@ -94,7 +102,9 @@ canvas.drawFillRect = option => {
     // offsetY Number 阴影相对于形状在竖直方向的偏移
     // blur Number 0~100 阴影的模糊级别，数值越大越模糊
     // color Color 阴影的颜色
-    if (!option.setShadow) {
+    if (setShadow) {
+      ctx.setShadow(setShadow)
+    } else {
       ctx.setShadow(0, 0, 0, '#fff')
     }
 
@@ -121,13 +131,18 @@ canvas.drawFillRect = option => {
  */
 canvas.drawImage = option => {
   // console.log('绘制圆角图片', option)
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     const image = option.image
     const x = parseFloat(option.x)
     const y = parseFloat(option.y)
     const width = parseFloat(option.width)
     const height = parseFloat(option.height)
     const borderRadius = parseFloat(option.borderRadius) || 0
+
+    let setShadow = undefined
+    if (option.setShadow) {
+      setShadow = option.setShadow
+    }
 
     // 将 borderRadius 设置为短边的一半
     if (width < borderRadius * 2 || height < borderRadius * 2) {
@@ -164,9 +179,11 @@ canvas.drawImage = option => {
      * @param {Number} dWidth 在目标画布上绘制图像的宽度，允许对绘制的图像进行缩放
      * @param {Number} dHeight 在目标画布上绘制图像的高度，允许对绘制的图像进行缩放
      */
-    ctx.drawImage(image, x, y, width, height)
+    await ctx.drawImage(image, x, y, width, height)
 
-    if (!option.setShadow) {
+    if (setShadow) {
+      ctx.setShadow(setShadow)
+    } else {
       ctx.setShadow(0, 0, 0, '#fff')
     }
 
@@ -204,13 +221,17 @@ canvas.drawText = async option => {
     const fontSize = parseFloat(option.fontSize) || 16
     const lineHeight = parseFloat(option.lineHeight) || 21
     const fontFamily = option.fontFamily || 'sans-serif'
-    let maxWidth
+    let maxWidth = undefined
     if (option.maxWidth) {
       maxWidth = parseFloat(option.maxWidth)
     }
-    let maxLine
+    let maxLine = undefined
     if (option.maxLine) {
       maxLine = parseInt(option.maxLine)
+    }
+    let setShadow = undefined
+    if (option.setShadow) {
+      setShadow = option.setShadow
     }
 
     ctx.font = `${fontStyle} ${fontVariant} ${fontWeight} ${fontSize}px ${fontFamily}`
@@ -241,7 +262,9 @@ canvas.drawText = async option => {
         ctx.fillText(currentText, x, y + currentLineHeight)
       }
 
-      if (!option.setShadow) {
+      if (setShadow) {
+        ctx.setShadow(setShadow)
+      } else {
         ctx.setShadow(0, 0, 0, '#fff')
       }
     }
@@ -250,29 +273,44 @@ canvas.drawText = async option => {
   })
 }
 
-canvas.draw = () => {
-  return new Promise((resolve, reject) => ctx.draw(false, resolve))
+canvas.draw = callback => {
+  return new Promise((resolve, reject) => {
+    ctx.draw(false, () => {
+      uni.canvasToTempFilePath(
+        {
+          canvasId,
+          success: res => {
+            console.log('canvasToTempFilePath success', res)
+            // res.tempFilePath
+            resolve(res.tempFilePath)
+            if (callback) {
+              callback(res.tempFilePath)
+            }
+          },
+          fail: err => {
+            console.log('canvasToTempFilePath error', err)
+            reject(err)
+          },
+        },
+        _this
+      )
+    })
+  })
 }
 
-canvas.save = callback => {
+canvas.save = filePath => {
   return new Promise((resolve, reject) => {
-    uni.canvasToTempFilePath(
-      {
-        canvasId: 'myCanvas',
-        success: res => {
-          uni.saveImageToPhotosAlbum({
-            filePath: res.tempFilePath,
-            success: result => {
-              if (callback) {
-                resolve()
-                callback()
-              }
-            },
-          })
-        },
+    uni.saveImageToPhotosAlbum({
+      filePath,
+      success: result => {
+        console.log('saveImageToPhotosAlbum success', result)
+        resolve(result)
       },
-      this
-    )
+      fail: error => {
+        console.log('saveImageToPhotosAlbum error', error)
+        reject(error)
+      },
+    })
   })
 }
 
