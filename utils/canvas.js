@@ -42,6 +42,11 @@ canvas.drawFillRect = option => {
     const borderRadius = parseFloat(option.borderRadius) || 0
     const backgroundColor = option.backgroundColor || '#000'
 
+    let setShadow = undefined
+    if (option.setShadow) {
+      setShadow = option.setShadow
+    }
+
     // 将 borderRadius 设置为短边的一半
     if (width < borderRadius * 2 || height < borderRadius * 2) {
       borderRadius = Math.min(width, height) / 2
@@ -92,7 +97,9 @@ canvas.drawFillRect = option => {
     // offsetY Number 阴影相对于形状在竖直方向的偏移
     // blur Number 0~100 阴影的模糊级别，数值越大越模糊
     // color Color 阴影的颜色
-    if (!option.setShadow) {
+    if (setShadow) {
+      ctx.setShadow(setShadow)
+    } else {
       ctx.setShadow(0, 0, 0, '#fff')
     }
 
@@ -126,6 +133,11 @@ canvas.drawImage = option => {
     const width = parseFloat(option.width)
     const height = parseFloat(option.height)
     const borderRadius = parseFloat(option.borderRadius) || 0
+
+    let setShadow = undefined
+    if (option.setShadow) {
+      setShadow = option.setShadow
+    }
 
     // 将 borderRadius 设置为短边的一半
     if (width < borderRadius * 2 || height < borderRadius * 2) {
@@ -164,7 +176,9 @@ canvas.drawImage = option => {
      */
     ctx.drawImage(image, x, y, width, height)
 
-    if (!option.setShadow) {
+    if (setShadow) {
+      ctx.setShadow(setShadow)
+    } else {
       ctx.setShadow(0, 0, 0, '#fff')
     }
 
@@ -202,13 +216,17 @@ canvas.drawText = async option => {
     const fontSize = parseFloat(option.fontSize) || 16
     const lineHeight = parseFloat(option.lineHeight) || 21
     const fontFamily = option.fontFamily || 'sans-serif'
-    let maxWidth
+    let maxWidth = undefined
     if (option.maxWidth) {
       maxWidth = parseFloat(option.maxWidth)
     }
-    let maxLine
+    let maxLine = undefined
     if (option.maxLine) {
       maxLine = parseInt(option.maxLine)
+    }
+    let setShadow = undefined
+    if (option.setShadow) {
+      setShadow = option.setShadow
     }
 
     ctx.font = `${fontStyle} ${fontVariant} ${fontWeight} ${fontSize}px ${fontFamily}`
@@ -239,7 +257,9 @@ canvas.drawText = async option => {
         ctx.fillText(currentText, x, y + currentLineHeight)
       }
 
-      if (!option.setShadow) {
+      if (setShadow) {
+        ctx.setShadow(setShadow)
+      } else {
         ctx.setShadow(0, 0, 0, '#fff')
       }
     }
@@ -248,8 +268,43 @@ canvas.drawText = async option => {
   })
 }
 
-canvas.draw = () => {
-  ctx.draw()
+canvas.draw = callback => {
+  return new Promise((resolve, reject) => {
+    ctx.draw(false, () => {
+      resolve()
+      if (callback) {
+        callback()
+      }
+    })
+  })
+}
+
+canvas.save = () => {
+  return new Promise((resolve, reject) => {
+    uni.canvasToTempFilePath(
+      {
+        canvasId: 'myCanvas',
+        success: res => {
+          console.log('canvasToTempFilePath success', res)
+
+          uni.saveImageToPhotosAlbum({
+            filePath: res.tempFilePath,
+            success: result => {
+              console.log('saveImageToPhotosAlbum success', result)
+              resolve()
+            },
+            fail: error => {
+              console.log('saveImageToPhotosAlbum error', error)
+            },
+          })
+        },
+        fail: err => {
+          console.log('canvasToTempFilePath error', err)
+        },
+      },
+      this
+    )
+  })
 }
 
 export default canvas

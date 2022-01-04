@@ -214,7 +214,7 @@ export default {
           // blur Number 0~100 阴影的模糊级别，数值越大越模糊
           // color Color 阴影的颜色
           // ctx.setShadow(0, 0, 15, 'rgba(102, 102, 102)')
-          ctx.setShadow(0, 0, 7, 'rgba(102, 102, 102, 0.1)')
+          ctx.setShadow(0, 0, 7, 'rgba(102, 102, 102, 0.05)')
 
           ctx.arc(data.left - canvasLeft + data.width / 2, data.top - canvasTop + data.height / 2, data.width / 2, 0, 2 * Math.PI)
 
@@ -226,8 +226,9 @@ export default {
 
       query.exec()
 
-      setTimeout(() => {
-        canvas.draw()
+      setTimeout(async () => {
+        await canvas.draw()
+        await canvas.save()
       }, 500)
     },
   },
@@ -345,7 +346,7 @@ image {
   height: 120rpx;
   border-radius: 60rpx;
   background-color: #fff;
-  box-shadow: 0px 0px 7px 0px rgba(102, 102, 102, 0.1);
+  box-shadow: 0px 0px 7px 0px rgba(102, 102, 102, 0.05);
   /* box-shadow: 0px 0px 7px 0px rgba(102, 102, 102); */
   display: flex;
   justify-content: center;
