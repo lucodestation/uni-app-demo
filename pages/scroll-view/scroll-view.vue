@@ -89,7 +89,7 @@ export default {
             }
           }
           // console.log(arr)
-          this.currentLetter = arr[arr.length - 1]
+          this.currentLetter = arr.length ? arr[arr.length - 1] : ''
         })
       }, 100)
     },
