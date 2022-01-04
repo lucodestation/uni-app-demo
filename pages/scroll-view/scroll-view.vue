@@ -11,6 +11,7 @@
         height: systemInfo.windowHeight + 'px',
       }"
       :scroll-into-view="scrollIntoView"
+      @scroll="handleScrollViewScroll"
     >
       <!-- 热门城市 -->
       <view class="hot-city">
@@ -28,7 +29,7 @@
       </view>
 
       <!-- 城市列表 -->
-      <view class="city-list">
+      <view class="city-list" id="cityList">
         <view class="title">全部城市</view>
         <view class="container" v-for="(item, index) in cityList.city" :key="index">
           <view class="letter" :id="item.title">{{ item.title }}</view>
@@ -39,14 +40,22 @@
 
     <!-- 字母导航 -->
     <view class="letter-nav">
-      <view class="letter" v-for="(item, index) in cityList.city" :key="index" @click="handleLetterNavClick(item.title)">{{ item.title }}</view>
+      <view
+        class="letter"
+        :class="{
+          active: currentLetter === item.title,
+        }"
+        v-for="(item, index) in cityList.city"
+        :key="index"
+        @click="handleLetterNavClick(item.title)"
+        >{{ item.title }}</view
+      >
     </view>
   </view>
 </template>
 
 <script>
 import cityList from '@/utils/cityList.json'
-console.log(cityList)
 
 export default {
   data() {
@@ -54,11 +63,35 @@ export default {
       systemInfo: uni.getSystemInfoSync(),
       cityList: cityList,
       scrollIntoView: '',
+      timer: '',
+      // 当前滚动条位置是哪个字母范围
+      currentLetter: '',
     }
   },
   methods: {
     handleLetterNavClick(letter) {
       this.scrollIntoView = letter
+    },
+    handleScrollViewScroll(event) {
+      // console.log(event)
+      clearTimeout(this.timer)
+
+      this.timer = setTimeout(() => {
+        const arr = []
+        const query = wx.createSelectorQuery().in(this)
+        query.selectAll('#cityList .letter').boundingClientRect()
+        query.exec(result => {
+          // console.log('result', result)
+
+          for (const item of result[0]) {
+            if (item.top <= 0) {
+              arr.push(item.id)
+            }
+          }
+          // console.log(arr)
+          this.currentLetter = arr[arr.length - 1]
+        })
+      }, 100)
     },
   },
 }
@@ -108,7 +141,7 @@ export default {
 /* 字母 */
 .city-list .container .letter {
   color: #999;
-  background-color: pink;
+  /* background-color: pink; */
 }
 .city-list .container .city {
   border-bottom: 2rpx solid #eee;
