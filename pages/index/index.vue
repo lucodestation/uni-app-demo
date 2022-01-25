@@ -17,6 +17,12 @@
     <navigator url="/pages/scroll-view/scroll-view">
       <button>scroll-view</button>
     </navigator>
+    <navigator url="/pages/loading1/loading1">
+      <button>loading1</button>
+    </navigator>
+    <navigator url="/pages/loading2/loading2">
+      <button>loading2</button>
+    </navigator>
 
     <!-- <view>
       <view>这是一<text>句</text>话</view>
