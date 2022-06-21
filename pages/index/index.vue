@@ -23,6 +23,9 @@
     <navigator url="/pages/loading2/loading2">
       <button>loading2</button>
     </navigator>
+    <navigator url="/pages/layout-demo/layout-demo">
+      <button>布局</button>
+    </navigator>
 
     <!-- <view>
       <view>这是一<text>句</text>话</view>
