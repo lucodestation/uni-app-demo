@@ -1,8 +1,8 @@
 <template>
   <view>
     <!-- tab -->
-    <view>
-      <view v-for="item in 5" :key="item" @click="current = item">布局{{ item }}</view>
+    <view class="tabs">
+      <view :class="{ active: current === item }" v-for="item in 5" :key="item" @click="current = item">布局{{ item }}</view>
     </view>
 
     <view class="layout-1" v-if="current === 1">
@@ -10,6 +10,7 @@
         <image class="image" src="@/static/images/demo.png" />
         <view class="info">
           <view class="title" :class="item % 2 ? 'ell1' : 'ell2'">英雄联盟英雄联盟英雄联盟英雄联盟英雄联盟</view>
+
           <view class="other-info">
             <view class="left"> 英雄联盟 </view>
             <view class="right"> 英雄联盟 </view>
@@ -37,7 +38,7 @@
 export default {
   data() {
     return {
-      current: 2
+      current: 1
     }
   },
   methods: {}
@@ -45,6 +46,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.tabs {
+  display: flex;
+  padding: 0 30rpx;
+  view {
+    margin-right: 4px;
+    margin-bottom: 4px;
+    background: orangered;
+    padding: 4rpx 6rpx;
+    color: #aaa;
+    border-radius: 4px;
+    &.active {
+      color: #fff;
+      text-shadow: 2rpx 2rpx 2px;
+    }
+  }
+}
 /* 文字溢出显示 ... */
 /* 单行 */
 .ell1 {
@@ -111,6 +128,7 @@ export default {
   padding: 30rpx;
   .item {
     display: flex;
+    // align-items: center;
     margin: 20rpx 0;
     border-radius: 20rpx;
     background: #f5f5f5;
