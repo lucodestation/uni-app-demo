@@ -24,6 +24,10 @@
       <button>loading2</button>
     </navigator>
 
+    <view>
+      <button open-type="contact">联系客服</button>
+    </view>
+
     <!-- <view>
       <view>这是一<text>句</text>话</view>
       <chunLei-popups
@@ -48,39 +52,40 @@ export default {
   data() {
     return {
       title: `<h1 style="text-align: center; color: #2c3e50;">首页</h1>`,
-      value: '提示信息',
-      data: '123',
-    }
+      value: "提示信息",
+      data: "123",
+    };
   },
   async onLoad() {
-    console.log('首页 onLoad')
+    console.log("首页 onLoad");
     // const result = await uni.request({
     //   url: 'https://api.github.com/',
     // })
     // console.log(result)
   },
   onShow() {
-    console.log('首页 onShow')
+    console.log("首页 onShow");
   },
   methods: {
+    handleTest() {},
     handleFullScreen() {
-      console.log('...')
-      const query = wx.createSelectorQuery().in(this)
-      query.select('#fullScreen').fields(
+      console.log("...");
+      const query = wx.createSelectorQuery().in(this);
+      query.select("#fullScreen").fields(
         {
           id: true,
           dataset: true,
           rect: true, // left right top bottom
           size: true, // width height
         },
-        data => {
-          console.log('fields', data)
+        (data) => {
+          console.log("fields", data);
         }
-      )
-      query.exec()
+      );
+      query.exec();
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
