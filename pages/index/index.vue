@@ -24,9 +24,11 @@
       <button>loading2</button>
     </navigator>
 
+    <!-- #ifdef MP-WEIXIN -->
     <view>
       <button open-type="contact">联系客服</button>
     </view>
+    <!-- #endif -->
 
     <!-- <view>
       <view>这是一<text>句</text>话</view>
