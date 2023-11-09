@@ -67,7 +67,9 @@ export default {
     console.log("首页 onShow");
   },
   methods: {
-    handleTest() {},
+    handleTest() {
+      console.log("test");
+    },
     handleFullScreen() {
       console.log("...");
       const query = wx.createSelectorQuery().in(this);
