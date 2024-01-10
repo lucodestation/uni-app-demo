@@ -4,7 +4,7 @@
     <button @click="loading = false">stop</button>
 
     <view class="loading-wrap">
-      <lzw-loading v-if="loading" speed="fast" width="50" lineWidth="2" lineColor="#ccc"></lzw-loading>
+      <lzw-loading v-if="loading" speed="fast" :width="50" :lineWidth="2" lineColor="#ccc"></lzw-loading>
     </view>
   </view>
 </template>
@@ -13,11 +13,11 @@
 export default {
   data() {
     return {
-      loading: false
+      loading: false,
     }
   },
   onLoad() {},
-  methods: {}
+  methods: {},
 }
 </script>
 

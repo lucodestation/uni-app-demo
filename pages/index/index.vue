@@ -33,6 +33,12 @@
       <button>lever3-picker</button>
     </navigator>
 
+    <!-- #ifdef MP-WEIXIN -->
+    <view>
+      <button open-type="contact">联系客服</button>
+    </view>
+    <!-- #endif -->
+
     <!-- <view>
       <view>这是一<text>句</text>话</view>
       <chunLei-popups
@@ -72,6 +78,9 @@ export default {
     console.log('首页 onShow')
   },
   methods: {
+    handleTest() {
+      console.log('test')
+    },
     handleFullScreen() {
       console.log('...')
       const query = wx.createSelectorQuery().in(this)
