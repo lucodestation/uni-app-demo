@@ -26,6 +26,12 @@
     <navigator url="/pages/layout-demo/layout-demo">
       <button>布局</button>
     </navigator>
+    <navigator url="/pages/move-slider/move-slider">
+      <button>滑块验证</button>
+    </navigator>
+    <navigator url="/pages/lever3-picker/lever3-picker">
+      <button>lever3-picker</button>
+    </navigator>
 
     <!-- <view>
       <view>这是一<text>句</text>话</view>
@@ -55,8 +61,8 @@ export default {
       data: '123',
     }
   },
-  async onLoad() {
-    console.log('首页 onLoad')
+  async onLoad(options) {
+    console.log('首页 onLoad', options)
     // const result = await uni.request({
     //   url: 'https://api.github.com/',
     // })
@@ -76,7 +82,7 @@ export default {
           rect: true, // left right top bottom
           size: true, // width height
         },
-        data => {
+        (data) => {
           console.log('fields', data)
         }
       )

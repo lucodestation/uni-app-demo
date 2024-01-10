@@ -86,19 +86,33 @@
     {
       "path": "pages/loading1/loading1",
       "style": {
-        "navigationBarTitleText": "",
+        "navigationBarTitleText": "loading1",
         "enablePullDownRefresh": false
       }
     },
     {
       "path": "pages/loading2/loading2",
       "style": {
-        "navigationBarTitleText": "",
+        "navigationBarTitleText": "loading2",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/layout-demo/layout-demo",
+      "style": {
+        "navigationBarTitleText": "布局",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/move-slider/move-slider",
+      "style": {
+        "navigationBarTitleText": "滑动验证",
         "enablePullDownRefresh": false
       }
     }
       ,{
-            "path" : "pages/layout-demo/layout-demo",
+            "path" : "pages/lever3-picker/lever3-picker",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "",

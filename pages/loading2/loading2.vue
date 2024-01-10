@@ -1,6 +1,5 @@
 <template>
   <view>
-    <view>loading</view>
     <button @click="loading = true">start</button>
     <button @click="loading = false">stop</button>
 
@@ -14,11 +13,11 @@
 export default {
   data() {
     return {
-      loading: false,
+      loading: false
     }
   },
   onLoad() {},
-  methods: {},
+  methods: {}
 }
 </script>
 
