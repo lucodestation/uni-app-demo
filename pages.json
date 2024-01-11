@@ -101,6 +101,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/seamless-rolling",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
   "globalStyle": {
     "navigationBarTextStyle": "black",

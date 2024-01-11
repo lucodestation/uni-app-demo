@@ -58,8 +58,8 @@ export default {
       data: "123",
     };
   },
-  async onLoad() {
-    console.log("首页 onLoad");
+  async onLoad(options) {
+    console.log("首页 onLoad", options);
     // const result = await uni.request({
     //   url: 'https://api.github.com/',
     // })
