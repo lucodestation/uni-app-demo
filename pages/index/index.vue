@@ -32,6 +32,12 @@
     <navigator url="/pages/lever3-picker/lever3-picker">
       <button>lever3-picker</button>
     </navigator>
+    <navigator url="/pages/storage/storage">
+      <button>storage</button>
+    </navigator>
+    <navigator url="/pages/tailwind-test/tailwind-test">
+      <button>tailwind-test</button>
+    </navigator>
 
     <!-- #ifdef MP-WEIXIN -->
     <view>

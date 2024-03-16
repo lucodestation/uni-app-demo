@@ -110,26 +110,36 @@
         "navigationBarTitleText": "滑动验证",
         "enablePullDownRefresh": false
       }
+    },
+    {
+      "path": "pages/lever3-picker/lever3-picker",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/seamless-rolling",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/storage/storage",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/tailwind-test/tailwind-test",
+      "style": {
+        "navigationBarTitleText": "tailwind test",
+        "enablePullDownRefresh": false
+      }
     }
-      ,{
-            "path" : "pages/lever3-picker/lever3-picker",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/seamless-rolling",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-    ],
+  ],
   "globalStyle": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "uni-app",
