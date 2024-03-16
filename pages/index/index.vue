@@ -1,5 +1,5 @@
 <template>
-  <view>
+  <view class="page-root">
     <rich-text :nodes="title"></rich-text>
 
     <view>
@@ -37,6 +37,9 @@
     </navigator>
     <navigator url="/pages/tailwind-test/tailwind-test">
       <button>tailwind-test</button>
+    </navigator>
+    <navigator url="/pages/svg/svg">
+      <button>svg</button>
     </navigator>
 
     <!-- #ifdef MP-WEIXIN -->
@@ -108,6 +111,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.page-root {
+  padding-bottom: 30rpx;
+}
+
 .full-screen {
   position: absolute;
   top: 0;

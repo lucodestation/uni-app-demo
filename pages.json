@@ -138,6 +138,13 @@
         "navigationBarTitleText": "tailwind test",
         "enablePullDownRefresh": false
       }
+    },
+    {
+      "path": "pages/svg/svg",
+      "style": {
+        "navigationBarTitleText": "svg",
+        "enablePullDownRefresh": false
+      }
     }
   ],
   "globalStyle": {
