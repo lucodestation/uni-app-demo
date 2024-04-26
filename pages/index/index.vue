@@ -41,6 +41,9 @@
     <navigator url="/pages/svg/svg">
       <button>svg</button>
     </navigator>
+    <navigator url="/pages/table/table">
+      <button>table</button>
+    </navigator>
 
     <!-- #ifdef MP-WEIXIN -->
     <view>

@@ -150,6 +150,11 @@
   position: relative
 }
 
+.sticky {
+  position: -webkit-sticky;
+  position: sticky
+}
+
 .block {
   display: block
 }

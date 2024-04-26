@@ -145,6 +145,13 @@
         "navigationBarTitleText": "svg",
         "enablePullDownRefresh": false
       }
+    },
+    {
+      "path": "pages/table/table",
+      "style": {
+        "navigationBarTitleText": "table",
+        "enablePullDownRefresh": false
+      }
     }
   ],
   "globalStyle": {
