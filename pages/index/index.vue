@@ -114,7 +114,7 @@ export default {
       query.exec()
     },
     handleGoToWebView() {
-      const src = 'https://www.baidu.com/'
+      const src = 'https://www.qq.com'
       uni.navigateTo({
         url: '/pages/web-view/web-view?src=' + src,
       })
