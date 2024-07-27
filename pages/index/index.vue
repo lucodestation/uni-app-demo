@@ -44,6 +44,10 @@
     <navigator url="/pages/table/table">
       <button>table</button>
     </navigator>
+    <navigator url="/pages/input-test/input-test">
+      <button>input-test</button>
+    </navigator>
+    <button @click="handleGoToWebView">web-view</button>
 
     <!-- #ifdef MP-WEIXIN -->
     <view>
@@ -108,6 +112,12 @@ export default {
         }
       )
       query.exec()
+    },
+    handleGoToWebView() {
+      const src = 'https://www.baidu.com/'
+      uni.navigateTo({
+        url: '/pages/web-view/web-view?src=' + src,
+      })
     },
   },
 }

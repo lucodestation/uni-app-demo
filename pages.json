@@ -152,6 +152,20 @@
         "navigationBarTitleText": "table",
         "enablePullDownRefresh": false
       }
+    },
+    {
+      "path" : "pages/input-test/input-test",
+      "style" : 
+      {
+        "navigationBarTitleText" : ""
+      }
+    },
+    {
+      "path" : "pages/web-view/web-view",
+      "style" : 
+      {
+        "navigationBarTitleText" : ""
+      }
     }
   ],
   "globalStyle": {
