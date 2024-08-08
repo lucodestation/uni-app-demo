@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "loading2",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "lzw-loading": "/components/lzw-loading/lzw-loading"
+  }
+}

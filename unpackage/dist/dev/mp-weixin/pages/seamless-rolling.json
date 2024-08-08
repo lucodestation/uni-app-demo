@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "y-scroll-seamless": "/components/y-scroll-seamless/y-scroll-seamless"
+  }
+}

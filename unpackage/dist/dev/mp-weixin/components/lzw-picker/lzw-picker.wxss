@@ -1,0 +1,11 @@
+
+.picker-view.data-v-bcb9bef8 {
+  width: 750rpx;
+  height: 600rpx;
+  margin-top: 20rpx;
+}
+.item.data-v-bcb9bef8 {
+  line-height: 100rpx;
+  text-align: center;
+}
+

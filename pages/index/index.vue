@@ -47,7 +47,9 @@
     <navigator url="/pages/input-test/input-test">
       <button>input-test</button>
     </navigator>
-    <button @click="handleGoToWebView">web-view</button>
+    <navigator url="/pages/external-links/external-links">
+      <button>外部链接</button>
+    </navigator>
 
     <!-- #ifdef MP-WEIXIN -->
     <view>
@@ -112,12 +114,6 @@ export default {
         }
       )
       query.exec()
-    },
-    handleGoToWebView() {
-      const src = 'https://www.qq.com'
-      uni.navigateTo({
-        url: '/pages/web-view/web-view?src=' + src,
-      })
     },
   },
 }

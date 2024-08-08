@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "滑动验证",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "move-verify": "/components/piaoyi-moveVerify/piaoyi-moveVerify"
+  }
+}

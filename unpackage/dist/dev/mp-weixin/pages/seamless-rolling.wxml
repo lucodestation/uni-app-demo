@@ -1,0 +1,1 @@
+<view><y-scroll-seamless vue-id="dc7cc404-1" options="{{({direction:'up',step:1,hoverStop:true})}}" bind:__l="__l" vue-slots="{{['default']}}"><block wx:for="{{20}}" wx:for-item="item" wx:for-index="__i0__"><view class="demo-y">{{''+item+''}}</view></block></y-scroll-seamless></view>

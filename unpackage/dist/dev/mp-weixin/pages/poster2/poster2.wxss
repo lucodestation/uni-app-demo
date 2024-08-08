@@ -1,0 +1,142 @@
+
+.ell1 {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.ell2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+.ell3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+
+image {
+  vertical-align: bottom;
+}
+.wrap {
+  padding: 30rpx;
+  background-color: hotpink;
+}
+.container {
+  /* background-color: #edf; */
+  background-color: #fff;
+  width: calc(750rpx - 30rpx - 30rpx);
+  padding-bottom: 30rpx;
+  border-radius: 10rpx;
+  position: relative;
+  line-height: 42rpx;
+}
+.container .close-icon {
+  position: absolute;
+  width: 22rpx;
+  height: 22rpx;
+  top: 0;
+  right: 0;
+  margin: 30rpx;
+}
+.goods-image-wrap image {
+  width: 100%;
+  height: 480rpx;
+  border-radius: 10rpx;
+}
+.title-wrap {
+  padding: 0 30rpx;
+  padding-top: 40rpx;
+  font-weight: 700;
+  font-size: 30rpx;
+  color: #333;
+  line-height: 46rpx;
+  /* background-color: #efefef; */
+}
+.price-wrap {
+  padding: 30rpx;
+  color: #fe3b3b;
+  font-size: 24rpx;
+  font-weight: 700;
+  line-height: 50rpx;
+  /* background-color: #fee; */
+}
+.hr2 {
+  height: 4rpx;
+  background-color: #f5f5f5;
+}
+.userinfo-wrap {
+  padding: 0 30rpx;
+  display: flex;
+  align-items: center;
+  /* background-color: pink; */
+}
+.avatar-wrap image {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 44rpx;
+}
+.nickname-wrap {
+  flex: 1;
+  padding: 0 20rpx;
+  height: 88rpx;
+  /* background-color: hotpink; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.nickname-wrap .nickname {
+  font-size: 30rpx;
+  color: #333;
+}
+.nickname-wrap .prompt-text {
+  color: #999;
+  font-size: 26rpx;
+}
+.qrcode-wrap {
+  position: relative;
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 60rpx;
+  background-color: #fff;
+  box-shadow: 0px 0px 7px 0px rgba(102, 102, 102, 0.05);
+  /* box-shadow: 0px 0px 7px 0px rgba(102, 102, 102); */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* outline: 2rpx solid red; */
+}
+.qrcode-wrap .qrcode {
+  width: 68rpx;
+  height: 68rpx;
+  /* outline: 2rpx solid red; */
+}
+.button-wrap {
+  margin-top: 30rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.button {
+  width: 550rpx;
+  line-height: 100rpx;
+  text-align: center;
+  background: #f9c949;
+  border-radius: 50rpx;
+  color: #333;
+  font-size: 30rpx;
+}
+.result-wrap {
+  padding: 30rpx;
+  background-color: #eee;
+}
+.canvas-wrap {
+  background-color: pink;
+  padding: 30rpx;
+}
+

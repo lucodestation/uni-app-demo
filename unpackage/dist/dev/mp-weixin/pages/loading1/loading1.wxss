@@ -1,0 +1,45 @@
+
+.u-loading-circle {
+
+		display: inline-flex;
+
+		vertical-align: middle;
+		width: 100rpx;
+		height: 100rpx;
+		background: 0 0;
+		border-radius: 50%;
+		border: 8rpx solid;
+		border-color: #FFFFFF #FFFFFF #FFFFFF #FFFFFF;
+		-webkit-animation: u-circle 5s linear infinite;
+		        animation: u-circle 5s linear infinite;
+}
+@-webkit-keyframes u-circle {
+0% {
+			
+			-webkit-transform: rotate(0);
+			
+			        transform: rotate(0);
+			border-color: #FFFFFF #FFFFFF #FFFFFF #FFFFFF;
+}
+25%{
+			-webkit-transform: rotate(90deg);
+			        transform: rotate(90deg);
+			border-color: #5555ff #FFFFFF #FFFFFF #FFFFFF;
+}
+50%{
+			-webkit-transform: rotate(180deg);
+			        transform: rotate(180deg);
+			border-color: #5555ff #5555ff #FFFFFF #FFFFFF;
+}
+75%{
+			-webkit-transform: rotate(270deg);
+			        transform: rotate(270deg);
+			border-color: #5555ff #5555ff #5555ff #FFFFFF;
+}
+100% {
+			-webkit-transform: rotate(360deg);
+			        transform: rotate(360deg);
+			border-color: #5555ff #5555ff #5555ff #5555ff;
+}
+}
+

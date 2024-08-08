@@ -1,0 +1,64 @@
+
+.scroll-view {
+  box-sizing: border-box;
+  /* background-color: #eee; */
+  padding: 0 20rpx;
+}
+.hot-city {
+  /* background-color: pink; */
+  padding: 20rpx 0;
+}
+.hot-city .title {
+  padding-bottom: 20rpx;
+  color: #999;
+}
+.hot-city .container .item {
+  display: inline-block;
+  box-sizing: border-box;
+  border: 2rpx solid #efefef;
+  padding: 10rpx 20rpx;
+  width: 126rpx;
+  text-align: center;
+}
+.hot-city .container .item:not(:nth-child(5n)) {
+  margin-right: 20rpx;
+}
+.hot-city .container .item:nth-child(n + 6) {
+  margin-top: 20rpx;
+}
+.city-list {
+  /* background-color: yellowgreen; */
+  padding: 20rpx 0;
+}
+.city-list .title {
+  padding-bottom: 20rpx;
+  color: #999;
+}
+.city-list .container {
+  line-height: 66rpx;
+}
+
+/* 字母 */
+.city-list .container .letter {
+  color: #999;
+  /* background-color: pink; */
+}
+.city-list .container .city {
+  border-bottom: 2rpx solid #eee;
+}
+.letter-nav {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+}
+
+/* 字母 */
+.letter-nav .letter {
+  text-align: center;
+  padding: 0 20rpx;
+  line-height: 36rpx;
+}
+.letter-nav .letter.active {
+  color: red;
+}
+

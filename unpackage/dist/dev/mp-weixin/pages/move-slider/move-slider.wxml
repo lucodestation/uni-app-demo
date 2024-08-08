@@ -1,0 +1,1 @@
+<view><move-verify class="vue-ref" vue-id="b6c780f8-1" height="{{height}}" data-ref="moveVerify" data-event-opts="{{[['^onFail',[['onFail']]],['^onSuccess',[['onSuccess']]]]}}" bind:onFail="__e" bind:onSuccess="__e" bind:__l="__l"></move-verify></view>

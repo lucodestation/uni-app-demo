@@ -166,6 +166,13 @@
       {
         "navigationBarTitleText" : ""
       }
+    },
+    {
+      "path" : "pages/external-links/external-links",
+      "style" : 
+      {
+        "navigationBarTitleText" : ""
+      }
     }
   ],
   "globalStyle": {
