@@ -65,8 +65,8 @@ export default {
   data() {
     return {
       poster: {
-        cover: '/static/poster/cover.png',
-        avatar: '/static/poster/avatar.png',
+        cover: '/static/poster/cover.jpg',
+        avatar: '/static/poster/avatar.jpg',
         qrcode: '/static/poster/qrcode.png',
         goodsName: '华晨宝马 X1 2021款 改款 sDrive20Li 尊享型 华晨宝马 X1 2021款 改款 sDrive20Li 尊享型',
         price: '298800.00',
@@ -109,7 +109,7 @@ export default {
           // scrollOffset: true, // scrollHeight scrollLeft scrollTop scrollWidth
           computedStyle: ['background-color', 'border-radius'],
         },
-        data => {
+        (data) => {
           console.log('fields', data)
           this.canvas.width = data.width + 'px'
           this.canvas.height = data.height + 'px'
@@ -131,11 +131,11 @@ export default {
           // scrollOffset: true, // scrollHeight scrollLeft scrollTop scrollWidth
           computedStyle: ['border-radius'],
         },
-        data => {
+        (data) => {
           console.log('image', data)
 
           // drawRoundImg(ctx, img, x, y, width, height, radius)
-          data.map(item => {
+          data.map((item) => {
             this.drawRoundImg(ctx, item.dataset.image, item.left - left, item.top - top, item.width, item.height, parseInt(item['border-radius']))
           })
         }
@@ -149,9 +149,9 @@ export default {
           dataset: true,
           computedStyle: ['color', 'font-family', 'font-weight', 'font-size', 'line-height', 'font'],
         },
-        data => {
+        (data) => {
           console.log('text', data)
-          data.map(item => {
+          data.map((item) => {
             const fontWeight = item['font-weight'] === '700' ? 'bold' : 'normal'
             ctx.font = `normal ${fontWeight} ${item['font-size']} ${item['font-family']}`
             ctx.setFillStyle(item.color)

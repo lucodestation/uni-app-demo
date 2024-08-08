@@ -7,7 +7,7 @@
 
     <view class="layout-1" v-if="current === 1">
       <view class="item" v-for="item in 5" :key="item">
-        <image class="image" src="@/static/images/demo.png" />
+        <image class="image" src="@/static/images/demo.jpg" />
         <view class="info">
           <view class="title" :class="item % 2 ? 'ell1' : 'ell2'">英雄联盟英雄联盟英雄联盟英雄联盟英雄联盟</view>
 
@@ -21,7 +21,7 @@
 
     <view class="layout-2" v-if="current === 2">
       <view class="item" v-for="item in 5" :key="item">
-        <image class="image" src="@/static/images/demo.png" />
+        <image class="image" src="@/static/images/demo.jpg" />
         <view class="info">
           <view class="title" :class="item % 2 ? 'ell1' : 'ell2'">英雄联盟英雄联盟英雄联盟英雄联盟英雄联盟英雄联盟英雄联盟英雄联盟英雄联盟英雄联盟</view>
           <view class="other-info">
@@ -38,10 +38,10 @@
 export default {
   data() {
     return {
-      current: 1
+      current: 1,
     }
   },
-  methods: {}
+  methods: {},
 }
 </script>
 
