@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "滑块",
-  "enablePullDownRefresh": false,
-  "usingComponents": {
-    "range-slider": "/components/range-slider/range-slider"
-  }
-}

@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "svg",
-  "enablePullDownRefresh": false,
-  "usingComponents": {
-    "icon-radio": "/components/icon-radio/icon-radio"
-  }
-}

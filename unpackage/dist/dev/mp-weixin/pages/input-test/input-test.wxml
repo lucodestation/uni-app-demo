@@ -1,1 +1,0 @@
-<view><my-input bind:input="__e" vue-id="bbffccc0-1" placeholder="请输入" value="{{inputValue}}" data-event-opts="{{[['^input',[['__set_model',['','inputValue','$event',[]]]]]]}}" bind:__l="__l"></my-input><view style="white-space:pre;">{{inputValue}}</view><button data-event-opts="{{[['tap',[['handleTest',['$event']]]]]}}" bindtap="__e">测试</button></view>

@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "",
-  "enablePullDownRefresh": false,
-  "usingComponents": {
-    "lzw-picker": "/components/lzw-picker/lzw-picker"
-  }
-}
