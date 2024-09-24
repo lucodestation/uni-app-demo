@@ -173,6 +173,13 @@
       {
         "navigationBarTitleText" : ""
       }
+    },
+    {
+    	"path" : "pages/view-base-value/view-base-value",
+    	"style" : 
+    	{
+    		"navigationBarTitleText" : ""
+    	}
     }
   ],
   "globalStyle": {

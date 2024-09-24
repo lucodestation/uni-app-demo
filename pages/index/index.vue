@@ -50,6 +50,9 @@
     <navigator url="/pages/external-links/external-links">
       <button>外部链接</button>
     </navigator>
+    <navigator url="/pages/view-base-value/view-base-value">
+      <button>查看值</button>
+    </navigator>
 
     <!-- #ifdef MP-WEIXIN -->
     <view>
@@ -83,6 +86,10 @@ export default {
       title: `<h1 style="text-align: center; color: #2c3e50;">首页</h1>`,
       value: '提示信息',
       data: '123',
+      undefinedValue: undefined,
+      nullValue: null,
+      emptyObj: {},
+      fun: () => {},
     }
   },
   async onLoad(options) {
